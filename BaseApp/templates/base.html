@@ -1,0 +1,184 @@
+{% extends "structure.html" %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Mon Site - Boutique de Luxe{% endblock %}</title>
+      
+        <!-- Styles -->
+        <link rel="stylesheet" href="{% static 'fontawesomefree/css/all.min.css' %}">
+        <link rel="stylesheet" href="{% static 'base/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'base/css/style.css' %}">
+      
+        <!-- Optional custom font -->
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+      
+        <style>
+          body {
+            font-family: 'Playfair Display', serif;
+            background-color: #0a0a0a;
+            color: #fff;
+          }
+      
+          .luxury-nav {
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          }
+      
+          .luxury-brand {
+            font-size: 1.8rem;
+            color: #e6d5b8 !important;
+          }
+      
+          .luxury-logo {
+            font-size: 2.5rem;
+            color: #c5a880;
+            margin-right: 0.4rem;
+          }
+      
+          .luxury-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+            margin: 0 1rem;
+            transition: color 0.3s;
+          }
+      
+          .luxury-link:hover {
+            color: #e6d5b8 !important;
+          }
+      
+          .luxury-dropdown {
+            background-color: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+          }
+      
+          .luxury-dropdown .dropdown-item {
+            color: rgba(255, 255, 255, 0.8);
+          }
+      
+          .luxury-dropdown .dropdown-item:hover {
+            background-color: #c5a880;
+            color: #0a0a0a;
+          }
+      
+          .luxury-cart {
+            position: relative;
+            color: #e6d5b8;
+            font-size: 1.3rem;
+          }
+      
+          .cart-count {
+            position: absolute;
+            top: -6px;
+            right: -10px;
+            background: #c5a880;
+            color: #0a0a0a;
+            font-size: 0.75rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+      
+          .hero-section {
+            background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+            padding: 5rem 1rem;
+            text-align: center;
+          }
+      
+          .hero-section h1 {
+            color: #e6d5b8;
+          }
+      
+          .btn-outline-light {
+            border-color: #c5a880;
+            color: #e6d5b8;
+          }
+      
+          .btn-outline-light:hover {
+            background-color: #c5a880;
+            color: #0a0a0a;
+          }
+      
+          .product-card img {
+            height: 250px;
+            object-fit: cover;
+          }
+      
+          .product-card .card-title {
+            color: #e6d5b8;
+          }
+      
+          @media (max-width: 992px) {
+            .luxury-nav {
+              padding: 1rem;
+            }
+          }
+        </style>
+      </head>
+ 
+  <!-- Hero Section -->
+   {% block content %}
+   <div class="hero-section">
+    <h1 class="display-4">Bienvenue sur notre boutique de luxe</h1>
+    <p class="lead">Découvrez nos collections exclusives de produits artisanaux et haut de gamme.</p>
+    <a href="/products" class="btn btn-outline-light btn-lg">Explorer les produits</a>
+  </div>
+
+  <!-- Featured Products -->
+  <div class="container py-5">
+    <h2 class="text-center mb-4" style="color: #c5a880;">Produits en vedette</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+      <!-- Product Card 1 -->
+      <div class="col">
+        <div class="card bg-dark text-white border-light product-card h-100">
+          <img src="{% static 'images/sample1.jpg' %}" class="card-img-top" alt="Sac en cuir marocain">
+          <div class="card-body">
+            <h5 class="card-title">Sac en cuir marocain</h5>
+            <p class="card-text">Un sac artisanal fabriqué à la main avec du cuir de haute qualité.</p>
+            <a href="/products/1" class="btn btn-outline-light">Voir le produit</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Card 2 -->
+      <div class="col">
+        <div class="card bg-dark text-white border-light product-card h-100">
+          <img src="{% static 'images/sample2.jpg' %}" class="card-img-top" alt="Tapis berbère">
+          <div class="card-body">
+            <h5 class="card-title">Tapis berbère</h5>
+            <p class="card-text">Un tapis traditionnel fabriqué à la main, symbole de l'art marocain.</p>
+            <a href="/products/2" class="btn btn-outline-light">Voir le produit</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Card 3 -->
+      <div class="col">
+        <div class="card bg-dark text-white border-light product-card h-100">
+          <img src="{% static 'images/sample3.jpg' %}" class="card-img-top" alt="Caftan royal">
+          <div class="card-body">
+            <h5 class="card-title">Caftan royal</h5>
+            <p class="card-text">Une pièce élégante reflétant l'héritage marocain avec une touche moderne.</p>
+            <a href="/products/3" class="btn btn-outline-light">Voir le produit</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+   {% endblock content %}
+ 
+  
+
+  <!-- Scripts -->
+  <script src="{% static 'base/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

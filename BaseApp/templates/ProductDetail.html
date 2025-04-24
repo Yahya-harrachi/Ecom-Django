@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Nos produits{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-4">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded shadow-sm">
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-8">
+            <div class="list-group">
+                <h3 class="list-group-item">{{ product.name }}</h3>
+                <p class="list-group-item text-muted">{{ product.description }}</p>
+
+                <div class="list-group-item">
+                    <div class="row">
+                        <div class="col"><strong>Prix:</strong></div>
+                        <div class="col text-success fw-bold">{{ product.price }} MAD</div>
+                    </div>
+                </div>
+
+                <div class="list-group-item">
+                    <div class="row">
+                        <div class="col"><strong>Statut:</strong></div>
+                        <div class="col">
+                            {% if product.countInStock > 0 %}
+                                <span class="badge bg-success">En stock ({{ product.countInStock }})</span>
+                            {% else %}
+                                <span class="badge bg-danger">Rupture de stock</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mon Site - Boutique de Luxe{% endblock %}</title>
+  
+    <!-- Styles -->
+    <link rel="stylesheet" href="{% static 'fontawesomefree/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'base/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'base/css/style.css' %}">
+  
+    <!-- Optional custom font -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+  
+    <style>
+      body {
+        font-family: 'Playfair Display', serif;
+        background-color: #0a0a0a;
+        color: #fff;
+      }
+  
+      .luxury-nav {
+        background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+        padding: 1rem 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+  
+      .luxury-brand {
+        font-size: 1.8rem;
+        color: #e6d5b8 !important;
+      }
+  
+      .luxury-logo {
+        font-size: 2.5rem;
+        color: #c5a880;
+        margin-right: 0.4rem;
+      }
+  
+      .luxury-link {
+        color: rgba(255, 255, 255, 0.8) !important;
+        margin: 0 1rem;
+        transition: color 0.3s;
+      }
+  
+      .luxury-link:hover {
+        color: #e6d5b8 !important;
+      }
+  
+      .luxury-dropdown {
+        background-color: #1a1a1a;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+  
+      .luxury-dropdown .dropdown-item {
+        color: rgba(255, 255, 255, 0.8);
+      }
+  
+      .luxury-dropdown .dropdown-item:hover {
+        background-color: #c5a880;
+        color: #0a0a0a;
+      }
+  
+      .luxury-cart {
+        position: relative;
+        color: #e6d5b8;
+        font-size: 1.3rem;
+      }
+  
+      .cart-count {
+        position: absolute;
+        top: -6px;
+        right: -10px;
+        background: #c5a880;
+        color: #0a0a0a;
+        font-size: 0.75rem;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+  
+      .hero-section {
+        background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+        padding: 5rem 1rem;
+        text-align: center;
+      }
+  
+      .hero-section h1 {
+        color: #e6d5b8;
+      }
+  
+      .btn-outline-light {
+        border-color: #c5a880;
+        color: #e6d5b8;
+      }
+  
+      .btn-outline-light:hover {
+        background-color: #c5a880;
+        color: #0a0a0a;
+      }
+  
+      .product-card img {
+        height: 250px;
+        object-fit: cover;
+      }
+  
+      .product-card .card-title {
+        color: #e6d5b8;
+      }
+  
+      @media (max-width: 992px) {
+        .luxury-nav {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
+  
+  <body>
+  
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg luxury-nav" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a class="navbar-brand luxury-brand" href="#"><span class="luxury-logo">E</span>-COMMERCE</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLuxury">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarLuxury">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a class="nav-link active luxury-link" href="/">Accueil</a></li>
+            <li class="nav-item"><a class="nav-link luxury-link" href="/products">Produits</a></li>
+            <li class="nav-item"><a class="nav-link luxury-link" href="#">Experience</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle luxury-link" href="#" data-bs-toggle="dropdown">Atelier</a>
+              <ul class="dropdown-menu luxury-dropdown">
+                <li><a class="dropdown-item" href="#">Couture</a></li>
+                <li><a class="dropdown-item" href="#">Privé</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Contact</a></li>
+              </ul>
+            </li>
+          </ul>
+          <div class="d-flex">
+            <form class="d-flex me-3">
+              <input class="form-control form-control-sm me-2" type="search" placeholder="Rechercher...">
+              <button class="btn btn-outline-light btn-sm" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <a href="#" class="luxury-cart"><i class="fas fa-shopping-bag"></i><span class="cart-count">3</span></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  
+     {% block content %}
+    
+    {% endblock  %}
+</body>
+</html>
