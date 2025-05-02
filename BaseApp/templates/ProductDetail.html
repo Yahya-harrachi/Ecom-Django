@@ -1,44 +1,282 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Nos produits{% endblock %}
+{% block title %}{{ product.name }} - Détails{% endblock %}
 
 {% block content %}
-<div class="container mt-3">
-    <div class="row">
-        <!-- Product Image -->
-        <div class="col-md-4">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded shadow-sm">
-        </div>
+<style>
+    .product-detail {
+        background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+        min-height: 100vh;
+        color: #e6d5b8;
+    }
 
-        <!-- Product Details -->
-        <div class="col-md-8">
-            <div class="list-group">
-                <h3 class="list-group-item">{{ product.name }}</h3>
-                <p class="list-group-item text-muted">{{ product.description }}</p>
+    .gallery-main {
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+        background: #1a1a1a;
+        border: 1px solid rgba(197, 168, 128, 0.1);
+        transition: transform 0.3s ease;
+    }
 
-                <div class="list-group-item">
-                    <div class="row">
-                        <div class="col"><strong>Prix:</strong></div>
-                        <div class="col text-success fw-bold">{{ product.price }} MAD</div>
-                    </div>
+    .gallery-main:hover img {
+        transform: scale(1.03);
+    }
+
+    .gallery-main img {
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+    }
+
+    .product-info {
+        backdrop-filter: blur(10px);
+        background: rgba(26, 26, 26, 0.95);
+        border: 1px solid rgba(197, 168, 128, 0.1);
+        border-radius: 16px;
+        padding: 2rem;
+    }
+
+    .product-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        letter-spacing: 0.5px;
+        margin-bottom: 1.5rem;
+    }
+
+    .product-description {
+        color: rgba(230, 213, 184, 0.8);
+        line-height: 1.8;
+        font-size: 1.1rem;
+        max-width: 600px;
+    }
+
+    .price-tag {
+        font-size: 2rem;
+        color: #c5a880;
+        font-weight: 500;
+        margin: 2rem 0;
+        position: relative;
+    }
+
+    .price-tag::after {
+        content: ' MAD';
+        font-size: 0.8em;
+        opacity: 0.8;
+        margin-left: 0.5rem;
+    }
+
+    .stock-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        background: rgba(197, 168, 128, 0.1);
+        border: 1px solid rgba(197, 168, 128, 0.2);
+    }
+
+    .badge-icon {
+        width: 24px;
+        height: 24px;
+        background: #c5a880;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .action-buttons {
+        margin-top: 3rem;
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-luxury {
+        background: linear-gradient(45deg, #c5a880, #b08f69);
+        border: none;
+        color: #0a0a0a;
+        padding: 1rem 2.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .btn-luxury:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(197, 168, 128, 0.3);
+    }
+
+    .btn-luxury[disabled] {
+        background: rgba(255,255,255,0.1);
+        color: rgba(230, 213, 184, 0.5);
+        cursor: not-allowed;
+    }
+
+    .specs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-top: 3rem;
+        padding-top: 3rem;
+        border-top: 1px solid rgba(197, 168, 128, 0.1);
+    }
+
+    .spec-card {
+        background: rgba(26, 26, 26, 0.7);
+        padding: 1.5rem;
+        border-radius: 8px;
+        border: 1px solid rgba(197, 168, 128, 0.05);
+    }
+
+    .spec-label {
+        color: rgba(230, 213, 184, 0.6);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .spec-value {
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    .floating-action {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: rgba(26, 26, 26, 0.95);
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        .product-title {
+            font-size: 2rem;
+        }
+        
+        .gallery-main img {
+            height: 400px;
+        }
+        
+        .floating-action {
+            display: block;
+        }
+    }
+</style>
+
+<div class="product-detail">
+    <div class="container py-5">
+        <div class="row g-5">
+            <!-- Main Gallery -->
+            <div class="col-lg-6">
+                <div class="gallery-main">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid">
                 </div>
+            </div>
 
-                <div class="list-group-item">
-                    <div class="row">
-                        <div class="col"><strong>Statut:</strong></div>
-                        <div class="col">
-                            {% if product.countInStock > 0 %}
-                                <span class="badge bg-success">En stock ({{ product.countInStock }})</span>
-                            {% else %}
-                                <span class="badge bg-danger">Rupture de stock</span>
-                            {% endif %}
+            <!-- Product Info -->
+            <div class="col-lg-6">
+                <div class="product-info">
+                    <h1 class="product-title">{{ product.name }}</h1>
+                    <div class="price-tag">{{ product.price }}</div>
+                    
+                    <div class="stock-status">
+                        <div class="badge-icon">
+                            <i class="fas fa-box-open text-dark" style="font-size: 0.8rem;"></i>
+                        </div>
+                        {% if product.countInStock > 0 %}
+                        <span>Disponible - {{ product.countInStock }} en stock</span>
+                        {% else %}
+                        <span>Rupture de stock</span>
+                        {% endif %}
+                    </div>
+
+                    <p class="product-description mt-4">{{ product.description }}</p>
+
+                    <!-- Specifications -->
+                    <div class="specs-grid">
+                        <div class="spec-card">
+                            <div class="spec-label">Matériau principal</div>
+                            <div class="spec-value">Cuir pleine fleur</div>
+                        </div>
+                        <div class="spec-card">
+                            <div class="spec-label">Dimensions</div>
+                            <div class="spec-value">30 x 20 x 10 cm</div>
+                        </div>
+                        <div class="spec-card">
+                            <div class="spec-label">Poids</div>
+                            <div class="spec-value">1.2 kg</div>
+                        </div>
+                        <div class="spec-card">
+                            <div class="spec-label">Garantie</div>
+                            <div class="spec-value">2 ans</div>
                         </div>
                     </div>
-                </div>
 
-                
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        {% if product.countInStock > 0 %}
+                        <button class="btn-luxury">
+                            <i class="fas fa-shopping-bag"></i>
+                            Ajouter au panier
+                        </button>
+                        <button class="btn-luxury">
+                            <i class="fas fa-lock"></i>
+                            Acheter maintenant
+                        </button>
+                        {% else %}
+                        <button class="btn-luxury" disabled>
+                            <i class="fas fa-bell"></i>
+                            Prévenir en stock
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
+        </div>
+
+        <!-- Floating Action (Mobile) -->
+        <div class="floating-action">
+            {% if product.countInStock > 0 %}
+            <button class="btn-luxury btn-sm">
+                <i class="fas fa-shopping-bag"></i>
+                Acheter
+            </button>
+            {% else %}
+            <button class="btn-luxury btn-sm" disabled>
+                <i class="fas fa-bell"></i>
+                Alerte stock
+            </button>
+            {% endif %}
         </div>
     </div>
 </div>
+
+<script>
+    // Animate elements on scroll
+    document.addEventListener('DOMContentLoaded', function() {
+        gsap.from('.gallery-main', {duration: 0.8, y: 50, opacity: 0, ease: 'power2.out'});
+        gsap.from('.product-info', {duration: 1, x: 50, opacity: 0, delay: 0.3, ease: 'power2.out'});
+        
+        // Show/hide floating action
+        window.addEventListener('scroll', function() {
+            const floatingAction = document.querySelector('.floating-action');
+            if (window.scrollY > 300) {
+                floatingAction.style.display = 'block';
+                gsap.to(floatingAction, {duration: 0.3, y: 0, opacity: 1});
+            } else {
+                gsap.to(floatingAction, {duration: 0.3, y: 20, opacity: 0, 
+                    onComplete: () => floatingAction.style.display = 'none'});
+            }
+        });
+    });
+</script>
 {% endblock %}

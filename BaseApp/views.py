@@ -10,9 +10,7 @@ from .models import Product
 #     def get(self,Request):
 #         return render(Request, "home.html")
 
-class BaseURL(View):
-    def get(self, Request):
-        return render(Request, "base.html")
+# ADMIN
     
 class ProductList(View):
     def get(self, Request):
@@ -44,7 +42,7 @@ class AddProduct(View):
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('/products/')
+            return redirect('/administration/products')
         return render(request, 'AddProduct.html', {'form': form})
 
 class ModifyProduct(View):
@@ -58,15 +56,35 @@ class ModifyProduct(View):
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
-            return redirect('/products/')
+            return redirect('/administration/products')
         return render(request, 'ModifyProduct.html', {'form' : form})
         
 class DeleteProduct(View):
     def get(self, request, productId):
         product = Product.objects.get(id=productId)
         product.delete()
-        return redirect('/products/')
+        return redirect('/administration/products')
     
 
-# ADMIN 
+# USER
 
+class BaseURL(View):
+    def get(self, Request):
+        products = Product.objects.all()
+        return render(Request, "base.html", { 'products': products})
+
+class UserProductsList(View):
+    def get(self, request):
+        category = request.GET.get('category')
+
+        products = Product.objects.all()
+        if category:
+            products = products.filter(category=category)
+
+        categories = Product.objects.values_list('category', flat=True).distinct()
+
+        return render(request, 'UserProductsList.html', {
+            'products': products,
+            'categories': categories,
+            'selected_category': category,
+        })

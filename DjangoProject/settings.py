@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'BaseApp',
-    'fontawesomefree'
+    'fontawesomefree',
+    'adminpage'
 ]
 
 MIDDLEWARE = [
@@ -90,7 +91,10 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
-        'PORT': '3306'
+        'PORT': '3306',
+         'OPTIONS': {
+            'charset': 'utf8',  
+        },
     }
 }
 
@@ -139,3 +143,4 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_REDIRECT_URL = '/myadmin/'

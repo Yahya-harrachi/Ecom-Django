@@ -1,0 +1,97 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <title>My Custom Admin Panel</title> 
+    <link 
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+rel="stylesheet"> 
+    <style> 
+        body { 
+            min-height: 100vh; 
+            display: flex; 
+        } 
+        .sidebar { 
+            width: 250px; 
+            background-color: #343a40; 
+            color: white; 
+        } 
+        .sidebar a { 
+            color: white; 
+            padding: 10px; 
+            display: block; 
+            text-decoration: none; 
+        } 
+        .sidebar a:hover { 
+            background-color: #495057; 
+        } 
+        .content { 
+            flex-grow: 1; 
+            padding: 20px; 
+        } 
+    </style> 
+</head> 
+<body> 
+<div class="sidebar"> 
+        <h4 class="p-3">Admin Panel</h4> 
+        <a href="{% url 'dashboard' %}">Dashboard</a> 
+        <a href="#">📦 Products</a> 
+        <a href="#">👥 Users</a> 
+        <a href="#">⚙️ Settings</a> 
+        <a href="{% url 'login' %}">🚪 Logout</a> 
+    </div> 
+    <div class="content"> 
+        <h2>Welcome, {{ request.user.username }} 👋</h2> 
+        <p class="text-muted">Overview of your website statistics.</p> 
+        <div class="row my-4"> 
+            <div class="col-md-4"> 
+                <div class="card text-white bg-primary mb-3"> 
+                    <div class="card-body"> 
+                        <h5 class="card-title">Total Users</h5> 
+                        <p class="card-text fs-3">120</p>  
+                    </div> 
+                </div> 
+            </div> 
+            <div class="col-md-4"> 
+                <div class="card text-white bg-success mb-3"> 
+                    <div class="card-body"> 
+                        <h5 class="card-title">Total Products</h5> 
+                        <p class="card-text fs-3">47</p> 
+                    </div> 
+                </div> 
+            </div> 
+            <div class="col-md-4"> 
+                <div class="card text-white bg-warning mb-3"> 
+                    <div class="card-body"> 
+                        <h5 class="card-title">Pending Orders</h5> 
+                        <p class="card-text fs-3">6</p> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+        <h4>📋 Recent Activity</h4> 
+        <table class="table table-striped mt-3"> 
+            <thead class="table-dark"> 
+                <tr> 
+                    <th>User</th> 
+                    <th>Action</th> 
+                    <th>Date</th> 
+                </tr> 
+            </thead> 
+            <tbody> 
+                <tr> 
+                    <td>user 1</td> 
+                    <td>buy new product: iPhone 15</td> 
+                    <td>2025-04-21</td> 
+                </tr> 
+                <tr> 
+                    <td>user 2</td> 
+                    <td>buy products: iPhone 14 and accessories</td> 
+                    <td>2025-04-22</td> 
+                </tr> 
+            </tbody> 
+        </table> 
+    </div> 
+ 
+</body> 
+</html>
