@@ -1,6 +1,6 @@
 from django import forms
 from .models import Product
-from django.contrib.auth.models import User
+from .models import Users
 
 
 class ProductForm(forms.ModelForm):
@@ -12,3 +12,8 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = '__all__'
+        
+class UsersForm(forms.ModelForm):
+    class Meta:
+        model = Users
+        fields = ['username', 'email', 'password']

@@ -23,7 +23,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [ 
     path('admin/', admin.site.urls), 
     path('', include('BaseApp.urls')), 
-    path('Admin/myadmin/', include('adminpage.urls')),   
+    path('myadmin/dashboard/', include('adminpage.urls')),   
  
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
 urlpatterns += [ 

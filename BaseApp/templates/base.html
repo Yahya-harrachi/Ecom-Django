@@ -6,118 +6,177 @@
 {% endblock %}
 
 {% block content %}
-  <style>
-    body {
-      font-family: 'Playfair Display', serif;
-      background-color: #0a0a0a;
-      color: #fff;
-    }
+<style>
+  body {
+    font-family: 'Playfair Display', serif;
+    background-color: #0a0a0a;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+  }
 
-    .hero-section {
-      background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
-      padding: 6rem 1rem;
-      text-align: center;
-    }
+  html {
+    scroll-behavior: smooth;
+  }
 
-    .hero-section h1 {
-      color: #e6d5b8;
-      font-weight: bold;
-    }
+  .video-background {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+  }
 
-    .hero-section p {
-      color: #ccc;
-      font-size: 1.2rem;
-    }
+  .video-background video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    opacity: 0.25;
+    z-index: 0;
+  }
 
-    .btn-outline-light {
-      border-color: #c5a880;
-      color: #e6d5b8;
-    }
+  /* Adjust the overlay to make it less opaque */
+  .video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.4); /* Reduced opacity */
+    z-index: 1;
+  }
 
-    .btn-outline-light:hover {
-      background-color: #c5a880;
-      color: #0a0a0a;
-    }
+  .hero-section {
+    position: relative;
+    z-index: 2;
+    background: none;
+    text-align: center;
+    padding-top: 8rem;
+    padding-bottom: 10rem; /* Makes button appear lower */
+    color: #e6d5b8;
+  }
 
-    .product-card {
-      background-color: #1a1a1a;
-      border: 1px solid #2c2c2c;
-      border-radius: 12px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      overflow: hidden;
-    }
+  .hero-section h1 {
+    font-weight: bold;
+  }
 
-    .product-card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 20px rgba(197, 168, 128, 0.2);
+  .hero-section p {
+    color: #ccc;
+    font-size: 1.2rem;
+  }
+
+  .btn-outline-light {
+    border-color: #c5a880;
+    color: #e6d5b8;
+  }
+
+  .btn-outline-light:hover {
+    background-color: #c5a880;
+    color: #0a0a0a;
+  }
+
+  .carousel-item {
+    padding: 2rem;
+  }
+
+  .carousel-inner .row {
+    justify-content: center;
+  }
+
+  .product-card {
+    background-color: #1a1a1a;
+    border: 1px solid #2c2c2c;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(197, 168, 128, 0.2);
+  }
+
+  .product-card img {
+    height: 240px;
+    object-fit: cover;
+    width: 100%;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+
+  .card-body {
+    padding: 1.2rem;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    color: #e6d5b8;
+  }
+
+  .card-text {
+    color: #bbb;
+    font-size: 0.95rem;
+  }
+
+  .product-price {
+    color: #c5a880;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+  }
+
+  .btn-outline-warning {
+    border-color: #c5a880;
+    color: #e6d5b8;
+  }
+
+  .btn-outline-warning:hover {
+    background-color: #c5a880;
+    color: #0a0a0a;
+  }
+
+  @media (max-width: 768px) {
+    .video-background {
+      height: 70vh;
     }
 
     .product-card img {
-      height: 240px;
-      object-fit: cover;
-      width: 100%;
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
+      height: 200px;
     }
+  }
+</style>
 
-    .card-body {
-      padding: 1.2rem;
-    }
+<!-- Background Video Section -->
+<div class="video-background">
+  <video autoplay muted loop>
+    <source src="{% static 'videos/shopping.mp4' %}" type="video/mp4">
+    Votre navigateur ne supporte pas la vidéo.
+  </video>
+  <div class="video-overlay"></div>
 
-    .card-title {
-      font-size: 1.25rem;
-      color: #e6d5b8;
-    }
-
-    .card-text {
-      color: #bbb;
-      font-size: 0.95rem;
-    }
-
-    .product-price {
-      color: #c5a880;
-      font-weight: bold;
-      font-size: 1.1rem;
-      margin-top: 0.5rem;
-    }
-
-    .btn-custom {
-      font-weight: 500;
-      font-size: 0.9rem;
-    }
-
-    .btn-outline-warning {
-      border-color: #c5a880;
-      color: #e6d5b8;
-    }
-
-    .btn-outline-warning:hover {
-      background-color: #c5a880;
-      color: #0a0a0a;
-    }
-
-    @media (max-width: 768px) {
-      .product-card img {
-        height: 200px;
-      }
-    }
-  </style>
-
-  <!-- Hero Section -->
   <div class="hero-section">
     <h1 class="display-4">Bienvenue sur notre boutique de luxe</h1>
     <p class="lead">Découvrez nos collections exclusives de produits artisanaux et haut de gamme.</p>
-    <a href="#products-section" class="btn btn-outline-light btn-lg mt-3">Explorer les produits</a>
+    <a href="#products-section" class="btn btn-outline-light btn-lg mt-5">Explorer les produits</a>
   </div>
+</div>
 
-  <!-- Product Grid -->
-  <div class="container py-5" id="products-section">
-    <h2 class="text-center mb-5" style="color: #c5a880;">Produits en vedette</h2>
+<!-- Product Section with Carousel -->
+<div class="container py-5" id="products-section">
+  <h2 class="text-center mb-5" style="color: #c5a880;">Produits en vedette</h2>
 
-    {% if products %}
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  {% if products %}
+    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
         {% for produit in products|slice:':6' %}
-          <div class="col">
+          {% if forloop.counter0|divisibleby:3 %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+              <div class="row">
+          {% endif %}
+
+          <div class="col-md-4 mb-4">
             <div class="product-card h-100">
               <img src="{{ produit.image.url }}" alt="{{ produit.name }}">
               <div class="card-body d-flex flex-column justify-content-between">
@@ -134,21 +193,110 @@
               </div>
             </div>
           </div>
+
+          {% if forloop.counter|divisibleby:3 or forloop.last %}
+              </div>
+            </div>
+          {% endif %}
         {% endfor %}
       </div>
 
-      <!-- View All Button -->
-      <div class="text-center mt-5">
-        <a href="/products" class="btn btn-outline-warning px-5 py-2">
-          Voir tous les produits <i class="fa fa-arrow-right ms-2"></i>
-        </a>
+      <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="/products" class="btn btn-outline-warning px-5 py-2">
+        Voir tous les produits <i class="fa fa-arrow-right ms-2"></i>
+      </a>
+    </div>
+  {% else %}
+    <div class="alert alert-secondary text-center" role="alert">
+      Aucun produit disponible pour le moment.
+    </div>
+  {% endif %}
+
+  <!-- Pourquoi choisir notre boutique -->
+<div class="container-fluid bg-black text-light py-5">
+  <div class="container">
+    <h2 class="text-center mb-5" style="color: #c5a880;">Pourquoi choisir notre boutique ?</h2>
+    <div class="row text-center">
+      <div class="col-md-3 mb-4">
+        <i class="fas fa-gem fa-2x mb-3" style="color: #c5a880;"></i>
+        <h5 class="mb-2">Produits de Luxe</h5>
+        <p class="text-muted">Des articles soigneusement sélectionnés pour leur qualité et exclusivité.</p>
       </div>
-    {% else %}
-      <div class="col-12">
-        <div class="alert alert-secondary text-center" role="alert">
-          Aucun produit disponible pour le moment.
+      <div class="col-md-3 mb-4">
+        <i class="fas fa-shipping-fast fa-2x mb-3" style="color: #c5a880;"></i>
+        <h5 class="mb-2">Livraison Rapide</h5>
+        <p class="text-muted">Expédition fiable partout au Maroc et à l'international.</p>
+      </div>
+      <div class="col-md-3 mb-4">
+        <i class="fas fa-lock fa-2x mb-3" style="color: #c5a880;"></i>
+        <h5 class="mb-2">Paiement Sécurisé</h5>
+        <p class="text-muted">Transactions protégées par les dernières technologies de sécurité.</p>
+      </div>
+      <div class="col-md-3 mb-4">
+        <i class="fas fa-headset fa-2x mb-3" style="color: #c5a880;"></i>
+        <h5 class="mb-2">Support 24/7</h5>
+        <p class="text-muted">Notre équipe est toujours disponible pour vous assister.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Avis des clients -->
+<div class="container-fluid py-5 bg-black">
+  <div class="container">
+    <h2 class="text-center mb-5" style="color: #c5a880;">Ce que disent nos clients</h2>
+    <div class="row">
+      <!-- Client 1 -->
+      <div class="col-md-4 mb-4">
+        <div class="bg-dark rounded p-4 h-100 shadow">
+          <p class="text-light">“Service exceptionnel et produits magnifiques. Mon sac est encore plus beau en vrai !”</p>
+          <div class="d-flex align-items-center mt-3">
+            <img src="{% static 'images/client1.jpg' %}" alt="Client 1" class="rounded-circle me-3" width="50" height="50">
+            <div>
+              <strong class="text-light">Sofia M.</strong><br>
+              <small class="text-muted">Casablanca, Maroc</small>
+            </div>
+          </div>
         </div>
       </div>
-    {% endif %}
+      <!-- Client 2 -->
+      <div class="col-md-4 mb-4">
+        <div class="bg-dark rounded p-4 h-100 shadow">
+          <p class="text-light">“Livraison rapide et emballage très soigné. Je recommande fortement.”</p>
+          <div class="d-flex align-items-center mt-3">
+            <img src="{% static 'images/client2.jpg' %}" alt="Client 2" class="rounded-circle me-3" width="50" height="50">
+            <div>
+              <strong class="text-light">Karim B.</strong><br>
+              <small class="text-muted">Marrakech, Maroc</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Client 3 -->
+      <div class="col-md-4 mb-4">
+        <div class="bg-dark rounded p-4 h-100 shadow">
+          <p class="text-light">“Luxe, élégance et professionnalisme. Mon expérience d’achat était parfaite.”</p>
+          <div class="d-flex align-items-center mt-3">
+            <img src="{% static 'images/client3.jpg' %}" alt="Client 3" class="rounded-circle me-3" width="50" height="50">
+            <div>
+              <strong class="text-light">Yasmine L.</strong><br>
+              <small class="text-muted">Rabat, Maroc</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
+
+  
+</div>
 {% endblock %}

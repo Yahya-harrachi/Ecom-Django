@@ -1,8 +1,10 @@
 from django.shortcuts import redirect, render
 from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth import authenticate, login
 
 from .forms import ProductForm
+from .forms import UsersForm
 from .models import Product
 # Create your views here.
 
@@ -88,3 +90,35 @@ class UserProductsList(View):
             'categories': categories,
             'selected_category': category,
         })
+
+class Login(View):
+    def get(self, request):
+        form = UsersForm()
+        return render(request, "login.html", {"form": form})
+
+    def post(self, request):
+        form = UsersForm(request=request, data=request.POST)
+        if form.is_valid():
+            # Authenticate user
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                # Login user
+                login(request, user)
+                return redirect('/')  # Redirect to a success page (like homepage or dashboard)
+            else:
+                form.add_error(None, "Invalid username or password")
+        return render(request, "login.html", {"form": form})
+    
+class CreateAcc(View):
+    def get(self, request):
+        return render(request, "CreateAcc.html")
+    
+    def post(self, request):
+        form = UsersForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+        return render(request, 'CreateAcc.html', {'form': form})

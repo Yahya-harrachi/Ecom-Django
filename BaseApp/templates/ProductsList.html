@@ -1,4 +1,4 @@
-{% extends 'structure.html' %}
+{% extends 'AdminStructure.html' %}
 
 {% block title %}
   Nos produits
@@ -51,9 +51,6 @@
                   <p class="fw-bold text-success">{{ produit.price }} MAD</p>
                 </div>
                 <div class="d-grid gap-2">
-                  <a href="/products/{{ produit.id }}" class="btn btn-info btn-custom">
-                    <i class="fa fa-eye me-1"></i> Détails
-                  </a>
                   <a href="{% url 'ModifyProduct' produit.id %}" class="btn btn-warning btn-custom">
                     <i class="fa fa-edit me-1"></i> Modifier
                   </a>
