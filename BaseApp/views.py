@@ -1,11 +1,12 @@
 from django.shortcuts import redirect, render
 from django.views import View
-from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth.hashers import check_password
 
+from django.contrib import messages
 from .forms import ProductForm
 from .forms import UsersForm
 from .models import Product
+from .models import Users
 # Create your views here.
 
 # class Home(View):
@@ -37,7 +38,6 @@ class AddProduct(View):
         # product_stockQte = request.POST.get('stockQte')
         # product_price = request.POST.get('price')
         # product_image = request.POST.get('image')
-
         # new_product = Product(name = product_name, brand = product_brand, category = product_category,
         #                       description = product_description, countInStock = product_stockQte, price = product_price, image = product_image)
         # new_product.save()
@@ -71,9 +71,14 @@ class DeleteProduct(View):
 # USER
 
 class BaseURL(View):
-    def get(self, Request):
+    def get(self, request):
         products = Product.objects.all()
-        return render(Request, "base.html", { 'products': products})
+        user = request.session.get('user')
+        if user:
+            print("Logged-in user:", user["username"])
+        else:
+            print("No user is logged in")
+        return render(request, "base.html", { 'products': products})
 
 class UserProductsList(View):
     def get(self, request):
@@ -93,25 +98,32 @@ class UserProductsList(View):
 
 class Login(View):
     def get(self, request):
-        form = UsersForm()
-        return render(request, "login.html", {"form": form})
+        return render(request, "login.html")
 
     def post(self, request):
-        form = UsersForm(request=request, data=request.POST)
-        if form.is_valid():
-            # Authenticate user
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
+        username = request.POST.get("username")
+        password = request.POST.get("password")
 
-            if user is not None:
-                # Login user
-                login(request, user)
-                return redirect('/')  # Redirect to a success page (like homepage or dashboard)
+        print(f"[LOGIN ATTEMPT] Username: {username}")
+
+        try:
+            user = Users.objects.get(username=username)
+            if user.password.strip() == password.strip():
+                request.session['user'] = {
+                    "username": user.username,
+                    "email": user.email,
+                }
+                print(f"\n\n[LOGIN SUCCESS] {user.username} logged in.")
+                return redirect("/")
             else:
-                form.add_error(None, "Invalid username or password")
-        return render(request, "login.html", {"form": form})
+                messages.error(request, "Invalid password")
+        except Users.DoesNotExist:
+            print(f"[LOGIN FAILED] User '{user.username}' not found")
+            messages.error(request, "User not found")
+
+        return render(request, "login.html")
     
+
 class CreateAcc(View):
     def get(self, request):
         return render(request, "CreateAcc.html")
@@ -122,3 +134,8 @@ class CreateAcc(View):
             form.save()
             return redirect('/')
         return render(request, 'CreateAcc.html', {'form': form})
+
+class Logout(View):
+    def get(self, request):
+        request.session.flush()  
+        return redirect("/") 

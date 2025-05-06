@@ -165,8 +165,8 @@
         <form method="POST" action="/CreateAccount/" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.non_field_errors }}
-            <input type="text" name="username" placeholder="USERNAME" value="{{ form.username.value }}" required />
-            <input type="email" name="email" placeholder="EMAIL" value="{{ form.email.value }}" required />
+            <input type="text" name="username" placeholder="USERNAME"  required />
+            <input type="email" name="email" placeholder="EMAIL"  required />
             <input type="password" name="password" placeholder="PASSWORD" required />
             <button type="submit">REGISTER</button>
         </form>
