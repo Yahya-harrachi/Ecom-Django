@@ -191,24 +191,7 @@
               <a class="nav-link luxury-link" href="/products">Produits</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link luxury-link" href="#">Panier</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle luxury-link" href="#" data-bs-toggle="dropdown">Atelier</a>
-              <ul class="dropdown-menu luxury-dropdown">
-                <li>
-                  <a class="dropdown-item" href="#">Couture</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">Privé</a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">Contact</a>
-                </li>
-              </ul>
+              <a class="nav-link luxury-link" href="#">About us</a>
             </li>
           </ul>
           <div class="d-flex align-items-center">
@@ -216,8 +199,10 @@
               <input class="form-control form-control-sm me-2" type="search" placeholder="Rechercher..." />
               <button class="btn btn-outline-light btn-sm" type="submit"><i class="fas fa-search"></i></button>
             </form>
-            <a href="#" class="luxury-cart me-3"><i class="fas fa-shopping-bag"></i><span class="cart-count">3</span></a>
-            <div class="dropdown">
+            <a href="/cart" class="luxury-cart me-3">
+              <i class="fas fa-shopping-bag"></i>
+              <span class="cart-count">{{ cart_item_count|default:0 }}</span>
+            </a> <div class="dropdown">
               {% if request.session.user %}
                 <!-- If user is logged in, show account dropdown -->
                 <a href="#" class="d-flex align-items-center text-light text-decoration-none dropdown-toggle" id="accountDropdown" data-bs-toggle="dropdown">
@@ -226,7 +211,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end luxury-dropdown">
                   <li>
-                    <a class="dropdown-item" href="#">Mon Profil</a>
+                    <a class="dropdown-item" href="/Profile">Mon Profil</a>
                   </li>
                   <li>
                     <a class="dropdown-item" href="#">Commandes</a>
@@ -251,6 +236,16 @@
       </div>
     </nav>
 
+    {% if messages %}
+      <div class="container mt-3">
+        {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert" style="background: #c5a880; color: #0a0a0a; border: none;">
+            <i class="fas fa-check-circle me-2"></i> {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
     <!-- Main Content -->
     {% block content %}
 

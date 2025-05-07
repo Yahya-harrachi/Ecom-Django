@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 from django.contrib.auth.hashers import check_password
 
@@ -139,3 +139,69 @@ class Logout(View):
     def get(self, request):
         request.session.flush()  
         return redirect("/") 
+    
+class Profile(View):
+    def get(self, request):
+        user_data = request.session.get('user')
+        if not user_data:
+            return redirect('/UserLogin')
+        return render(request, 'Profile.html', {'user_data': user_data})
+
+class add_to_cart(View):
+    def post(self, request, product_id):
+        product = get_object_or_404(Product, pk=product_id)
+        quantity = int(request.POST.get("quantity", 1))
+
+        cart = request.session.get('cart', {})
+
+        if str(product_id) in cart:
+            cart[str(product_id)] = int(cart[str(product_id)]) + quantity
+        else:
+            cart[str(product_id)] = quantity
+
+        request.session['cart'] = cart
+        messages.success(request, "Produit ajouté au panier avec succès.")
+        return redirect('/products/' + str(product_id))
+
+        
+
+class CartView(View):
+    def get(self, request):
+        cart = request.session.get('cart', {})
+        cart_items = []
+        total = 0
+
+        for product_id, quantity in cart.items():
+            product = get_object_or_404(Product, pk=product_id)
+            item_total = product.price * quantity
+            total += item_total
+            cart_items.append({
+                'id': product.id,
+                'name': product.name,
+                'price': product.price,
+                'quantity': quantity,
+                'image_url': product.image.url,
+                'total': round(product.price * quantity, 2),  #
+            })
+
+        return render(request, 'cart.html', {'cart_items': cart_items, 'total': total})
+
+class UpdateQuantityView(View):
+    def post(self, request, product_id):
+        quantity = int(request.POST.get("quantity", 1))
+        cart = request.session.get('cart', {})
+        cart[str(product_id)] = quantity
+        request.session['cart'] = cart
+        return redirect('cart')
+
+class DeleteItemView(View):
+    def post(self, request, product_id):
+        cart = request.session.get('cart', {})
+        cart.pop(str(product_id), None)
+        request.session['cart'] = cart
+        return redirect('cart')
+
+class ClearCartView(View):
+    def post(self, request):
+        request.session['cart'] = {}
+        return redirect('cart')

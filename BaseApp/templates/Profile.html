@@ -1,0 +1,80 @@
+{% extends "structure.html" %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #000;
+    color: #fff;
+  }
+
+  .lux-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    max-width: 600px;
+    margin: 3rem auto;
+  }
+
+  .lux-card h2 {
+    color: #ffd700;
+    font-weight: 600;
+  }
+
+  .profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #ffd700;
+    object-fit: cover;
+    margin-bottom: 1rem;
+  }
+
+  .lux-card p{
+    color: aliceblue;
+  }
+  .lux-button {
+    background: linear-gradient(to right, #ffd700, #ffcc00);
+    color: #000;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: 0.3s;
+  }
+
+  .lux-button:hover {
+    background: #fff;
+    color: #000;
+  }
+
+  .lux-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 1.5rem 0;
+  }
+</style>
+
+<div class="lux-card text-center">
+  <img src="{{ user_data.profile_pic|default:'/static/images/profile.png' }}" class="profile-img" alt="Profile">
+  <h2>{{ user_data.username }}</h2>
+  <p>{{ user_data.email }}</p>
+
+  <div class="lux-divider"></div>
+
+  <div class="row text-start mb-3">
+    
+    <div class="col-6">
+      <strong>Role:</strong> <span class="text-light">{{ user_data.role|default:"Client" }}</span>
+    </div>
+    <div class="col-12 mt-2">
+      <strong>Inscrit le:</strong>
+      <span class="text-light">{{ user_data.joined|date:"d M Y" }}</span>
+    </div>
+  </div>
+
+  <a href="/" class="lux-button me-2">Accueil</a>
+  <a href="{% url 'logout' %}" class="lux-button">Déconnexion</a>
+</div>
+{% endblock %}

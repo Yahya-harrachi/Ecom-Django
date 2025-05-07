@@ -7,6 +7,12 @@ urlpatterns = [
   path("UserLogin/",views.Login.as_view(), name="Login"),
   path("CreateAccount/",views.CreateAcc.as_view(), name="CreateAcc"),
   path("UserLogout",views.Logout.as_view()),
+  path("Profile", views.Profile.as_view(), name="Profile"),
+  path('add-to-cart/<int:product_id>/', views.add_to_cart.as_view(), name='add_to_cart'),
+  path('cart/', views.CartView.as_view(), name='cart'),
+  path('cart/update/<int:product_id>/', views.UpdateQuantityView.as_view(), name='update_quantity'),
+  path('cart/delete/<int:product_id>/', views.DeleteItemView.as_view(), name='delete_item'),
+  path('cart/clear/', views.ClearCartView.as_view(), name='clear_cart'),
   
   # ADMIN
   path('administration/products', views.ProductList.as_view(), name='ProductsList'),  
