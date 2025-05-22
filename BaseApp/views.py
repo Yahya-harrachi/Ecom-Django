@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 from django.contrib.auth.hashers import check_password
-
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from django.contrib import messages
 from .forms import ProductForm
 from .forms import UsersForm
@@ -205,3 +206,56 @@ class ClearCartView(View):
     def post(self, request):
         request.session['cart'] = {}
         return redirect('cart')
+    
+class ProcessCheckoutView(View):
+    def post(self, request):
+        card_name = request.POST.get('card_name')
+        card_number = request.POST.get('card_number')
+        exp_date = request.POST.get('exp_date')
+        cvv = request.POST.get('cvv')
+
+        # For demo only — DO NOT store this in production!
+        print("Payment Info:", card_name, card_number, exp_date, cvv)
+
+        # Example order saving or confirmation message
+        messages.success(request, "Payment processed (mock)! Order placed successfully.")
+        request.session['cart'] = {}
+
+        return redirect('checkout')
+    
+    
+class Billing(View):
+    def get(self, request):
+        return render(request, "Billing.html")
+
+class Success(View):
+    def get(self, request):
+        return render(request, "success.html")
+
+    def post(self, request):
+        cart = request.session.get('cart', {})
+        if not cart:
+            # Cart empty or missing
+            return render(request, "empty_cart.html")
+
+        out_of_stock_products = []
+
+        # Iterate over all product ids in cart
+        for product_id_str, quantity in cart.items():
+            product_id = int(product_id_str)
+            product = get_object_or_404(Product, pk=product_id)
+
+            if product.countInStock >= quantity:
+                product.countInStock -= quantity
+                product.save()
+            else:
+                out_of_stock_products.append(product)
+
+        if out_of_stock_products:
+            return render(request, "out_of_stock.html", {"products": out_of_stock_products})
+
+        # Clear cart after successful purchase
+        request.session['cart'] = {}
+        request.session.modified = True  # to ensure session save
+
+        return redirect('success')  # redirect to success GET page

@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.urls import path
 from . import views
 urlpatterns = [
@@ -13,6 +14,9 @@ urlpatterns = [
   path('cart/update/<int:product_id>/', views.UpdateQuantityView.as_view(), name='update_quantity'),
   path('cart/delete/<int:product_id>/', views.DeleteItemView.as_view(), name='delete_item'),
   path('cart/clear/', views.ClearCartView.as_view(), name='clear_cart'),
+  path('checkout/', views.ProcessCheckoutView.as_view(), name='checkout'),
+  path('Billing/', views.Billing.as_view(), name='Billing'),
+  path('success/', views.Success.as_view(), name='success'),  # no product_id here
   
   # ADMIN
   path('administration/products', views.ProductList.as_view(), name='ProductsList'),  
