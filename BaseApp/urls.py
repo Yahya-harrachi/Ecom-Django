@@ -16,10 +16,12 @@ urlpatterns = [
   path('cart/clear/', views.ClearCartView.as_view(), name='clear_cart'),
   path('checkout/', views.ProcessCheckoutView.as_view(), name='checkout'),
   path('Billing/', views.Billing.as_view(), name='Billing'),
-  path('success/', views.Success.as_view(), name='success'),  # no product_id here
+  path('success/', views.Success.as_view(), name='success'), 
+  path('About/', views.About.as_view(), name='About'),
   
   # ADMIN
   path('administration/products', views.ProductList.as_view(), name='ProductsList'),  
+  path('administration/dashboard', views.Dashboard.as_view(), name='dashboard'),
   path('products/<int:productId>', views.ProductDetail.as_view(), name='ProductDetail'),
   path('AddProduct', views.AddProduct.as_view(), name="AddProduct"),
   path('ModifyProduct/<int:productId>', views.ModifyProduct.as_view(), name="ModifyProduct"),

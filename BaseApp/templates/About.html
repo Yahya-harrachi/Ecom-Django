@@ -1,0 +1,99 @@
+{% extends 'structure.html' %}
+
+{% block content %}
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+    }
+    
+    .about-container {
+      max-width: 1000px;
+      margin: 4rem auto;
+      background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.08));
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: 0 0 60px rgba(255, 215, 0, 0.15);
+      backdrop-filter: blur(8px);
+      text-align: center;
+    }
+    
+    .about-title {
+      font-size: 2.8rem;
+      font-weight: bold;
+      color: #ffd700;
+      margin-bottom: 1.5rem;
+    }
+    
+    .about-subtitle {
+      font-size: 1.3rem;
+      color: #ccc;
+      margin-bottom: 2rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .about-section {
+      margin-top: 3rem;
+      text-align: left;
+    }
+    
+    .about-section h3 {
+      color: #ffd700;
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+    
+    .about-section p {
+      font-size: 1.05rem;
+      color: #bbb;
+      line-height: 1.7;
+    }
+    
+    .highlight {
+      color: #ffd700;
+      font-weight: 600;
+    }
+    
+    .signature {
+      margin-top: 3rem;
+      font-style: italic;
+      color: #888;
+      font-size: 0.95rem;
+    }
+  </style>
+
+  <div class="about-container">
+    <div class="about-title">À Propos de Nous</div>
+    <div class="about-subtitle">Une passion pour l'excellence, une obsession pour le détail. Bienvenue dans notre univers.</div>
+
+    <div class="about-section">
+      <h3>Notre Histoire</h3>
+      <p>
+        Fondée avec une vision claire de combiner <span class="highlight">élégance</span> et <span class="highlight">fonctionnalité</span>, notre boutique est bien plus qu’un simple magasin — c’est une expérience. Depuis nos débuts, nous nous efforçons de proposer des produits qui inspirent, qui reflètent une personnalité unique et qui incarnent la qualité.
+      </p>
+    </div>
+
+    <div class="about-section">
+      <h3>Notre Mission</h3>
+      <p>Offrir une sélection raffinée d’articles conçus pour ceux qui ne veulent que le meilleur. Chaque pièce que nous proposons est soigneusement choisie pour son style, sa durabilité et son originalité. Nous croyons que le luxe doit être accessible, éthique et durable.</p>
+    </div>
+
+    <div class="about-section">
+      <h3>Pourquoi Nous Choisir</h3>
+      <p>
+        • Qualité artisanale exceptionnelle<br />
+        • Service client personnalisé<br />
+        • Livraison rapide & sécurisée<br />
+        • Paiements 100% sécurisés<br />
+        • Une communauté fidèle et passionnée
+      </p>
+    </div>
+
+    <div class="signature">
+      Merci de faire partie de notre aventure.<br />
+      <span class="highlight">Notre équipe</span> ✨
+    </div>
+  </div>
+{% endblock %}

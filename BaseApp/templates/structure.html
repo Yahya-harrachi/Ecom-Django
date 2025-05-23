@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="{% static 'base/css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static 'base/css/style.css' %}" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet" />
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 
     <style>
       body {
@@ -39,7 +40,7 @@
       
       .luxury-brand {
         font-size: 1.8rem;
-        color: #e6d5b8 !important;
+        color: #e6d5b8 ;
         transition: font-size 0.3s ease;
       }
       
@@ -60,14 +61,14 @@
       
       .luxury-link {
         position: relative;
-        color: rgba(255, 255, 255, 0.8) !important;
+        color: rgba(255, 255, 255, 0.8) ;
         margin: 0 1rem;
         transition: color 0.3s ease;
         text-decoration: none;
       }
       
       .luxury-link:hover {
-        color: #e6d5b8 !important;
+        color: #e6d5b8 ;
       }
       
       .luxury-link::after {
@@ -107,10 +108,10 @@
       
       .cart-count {
         position: absolute;
-        top: -6px;
+        top: -5px;
         right: -10px;
         background: #c5a880;
-        color: #0a0a0a;
+        color:rgb(255, 255, 255);
         font-size: 0.75rem;
         width: 18px;
         height: 18px;
@@ -192,7 +193,7 @@
               <a class="nav-link luxury-link" href="/products">Produits</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link luxury-link" href="#">About us</a>
+              <a class="nav-link luxury-link" href="/About">About us</a>
             </li>
           </ul>
           <div class="d-flex align-items-center">
@@ -236,7 +237,7 @@
         </div>
       </div>
     </nav>
-
+    
     {% if messages %}
       <div class="container mt-3">
         {% for message in messages %}

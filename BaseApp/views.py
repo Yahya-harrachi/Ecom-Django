@@ -20,6 +20,16 @@ class ProductList(View):
     def get(self, Request):
         products = Product.objects.all()
         return render(Request, 'ProductsList.html', {'products': products})
+    
+class Dashboard(View):
+    def get(self, request):
+        total_users = Users.objects.count()
+        total_products = Product.objects.count()
+
+        return render(request, 'dashboard.html', {
+            'total_users': total_users,
+            'total_products': total_products,
+        })
 
 class ProductDetail(View):
     def get(self, request, productId):
@@ -259,3 +269,7 @@ class Success(View):
         request.session.modified = True  # to ensure session save
 
         return redirect('success')  # redirect to success GET page
+
+class About(View):
+    def get(self, request):
+        return render(request, "About.html")
